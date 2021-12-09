@@ -19,7 +19,7 @@ public class TestCollegeApp {
         compStudent[1]=student3;
 
 
-        Student creatStudent[]= new Student[10];
+        Student creatStudent[]= new Student[9];
         creatStudent[0]=student2;
         creatStudent[1]=student4;
 
