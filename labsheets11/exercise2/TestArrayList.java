@@ -153,10 +153,10 @@ public class TestArrayList{
                     amendProduct(allProducts);
                     break;
                 case 3:
-                    System.out.println("Remove product");
+                    remove(allProducts);
                     break;
                 case 4:
-                    System.out.println("View all product");
+                    viewAllProducts(allProducts);
                     break;
             }
 
@@ -176,13 +176,11 @@ public class TestArrayList{
     }
     public static void amendProduct(ArrayList<Product> allProducts){
 
-        Iterator<Product>iterator=allProducts.iterator();
-         ArrayList<Product>all = new ArrayList<>();
         String output="";
         String output2="";
         int id;
         Boolean valid=false;
-        String amendName;
+        String amendName,amendDescription;
         int choice;
 
         String name = JOptionPane.showInputDialog("Please enter the name of the product you wish to  amend");
@@ -196,10 +194,10 @@ public class TestArrayList{
         id = Integer.parseInt(JOptionPane.showInputDialog("The following products matched your search phrase\n\n" +
                 output+"\n\n\nEnter the id of the one you want to amend"));
        // JOptionPane.showMessageDialog(null,output);
-        for(Product p: allProducts){
+        for(Product product: allProducts){
            // Product p= iterator.next();
-            if(p.getId()==id){
-                output2+=p;
+            if(product.getId()==id){
+                output2+=product;
             }
 
         }
@@ -209,24 +207,22 @@ public class TestArrayList{
         while(!valid){
             if(choice>=1 && choice<=3){
                 if(choice==1){
-                    amendName = JOptionPane.showInputDialog("Please enter the new description for the product");
-                    if(amendName.equals(" ")){
-                        JOptionPane.showMessageDialog(null,"Sorry! You must enter a description");
-                    }
-                    else{
-                        allProducts.get(id-1).setDescription(amendName);
-                        JOptionPane.showMessageDialog(null,"Product details now amended!");
-                        valid=true;
-                    }
+                    amendName = JOptionPane.showInputDialog("Please enter the new name for the product");
 
-                   // while(iterator.hasNext()){
-                       // Product p= iterator.next();
-
-
+                    allProducts.get(id-1).setName(amendName);
+                    JOptionPane.showMessageDialog(null,"Product details now amended!");
+                    valid=true;
                 }
                 else if(choice==2){
+                    amendDescription = JOptionPane.showInputDialog("Please enter the new description for the product");
 
+                    allProducts.get(id-1).setDescription(amendDescription);
+                    JOptionPane.showMessageDialog(null,"Product details now amended!");
+                    valid=true;
 
+                }
+                else{
+                    JOptionPane.showMessageDialog(null,"Cancel");
                 }
             }
             else
@@ -239,6 +235,50 @@ public class TestArrayList{
 
 
 
+     }
+     public static void remove(ArrayList<Product> allProducts){
+        Iterator<Product> iterator = allProducts.iterator();
+        String productChoice,output=" ", output2=" ";
+        int id,confirmed,index=0;
+
+
+        productChoice = JOptionPane.showInputDialog("Please enter the name product you wish to remove");
+
+        while(iterator.hasNext()){
+            Product p= iterator.next();
+            if(p!=null && p.getName().contains(productChoice)){
+                output+=p+"\n";
+            }
+        }
+        id=Integer.parseInt(JOptionPane.showInputDialog("The following products matched your search phrase\n\n"+output+"\n\n\nEnter the " +
+                "ID of the one you want to remove"));
+
+       // while(iterator.hasNext())
+         for(Product p: allProducts){
+           // Product p=iterator.next();
+            if(p!=null && p.getId()==id){
+
+                output2+=p+"\n";
+                confirmed=JOptionPane.showConfirmDialog(null,"The details of the product you want to remove\n\n" +
+                        output2+"\n\nAre you sure you want to remove the product","Product details",JOptionPane.YES_NO_CANCEL_OPTION);
+
+                if(confirmed==JOptionPane.YES_OPTION){
+                    index+=id-1;
+                }
+                else
+                    JOptionPane.showMessageDialog(null,"Product removal canceled");
+            }
+        }
+        allProducts.remove(index);
+         JOptionPane.showMessageDialog(null,"Product now removed from the list");
+
+     }
+     public static void viewAllProducts(ArrayList<Product> allProduct){
+        String output="";
+        for(Product p:allProduct){
+            output+=p+"\n";
+        }
+        JOptionPane.showMessageDialog(null,output);
      }
 
 }
