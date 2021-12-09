@@ -269,8 +269,11 @@ public class TestArrayList{
                     JOptionPane.showMessageDialog(null,"Product removal canceled");
             }
         }
-        allProducts.remove(index);
-         JOptionPane.showMessageDialog(null,"Product now removed from the list");
+         if(index!=0){
+             allProducts.remove(index);
+             JOptionPane.showMessageDialog(null,"Product now removed from the list");
+         }
+
 
      }
      public static void viewAllProducts(ArrayList<Product> allProduct){
